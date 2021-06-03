@@ -71,6 +71,3 @@ class Square {
 		this.origin.y = this.origin.y + 1;
 	}
 }
-Square.prototype.down = function () {
-	this.origin.x = this.origin.x + 1;
-}
