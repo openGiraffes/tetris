@@ -34,6 +34,22 @@ body {
     border-bottom: 1px solid blue;
 }
 
+@keyframes FallEnd {
+    0%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(5px);
+    }
+    100%{
+        transform: translateY(0);
+    }
+}
+
+.game.FallEnd{
+    animation: FallEnd 0.1s;
+}
+
 .Right{
     margin-left: 20px;
     display: flex;

@@ -42,6 +42,9 @@ class Local {
         var bindKeyEvent = function () {
             document.activeElement.addEventListener("keydown", function (e) {
                 if (e.key != "EndCall") e.preventDefault();
+                if (e.repeat) {
+                    return;
+                }
                 switch (e.key) {
                     case "F1":
                     case "SoftLeft":
@@ -56,10 +59,10 @@ class Local {
                         game.rotate();
                         break;
                     case "ArrowLeft":
-                        !e.repeat && leftEvent.start();
+                        leftEvent.start();
                         break;
                     case "ArrowRight":
-                        !e.repeat && rightEvent.start();
+                        rightEvent.start();
                         break;
                     case "Backspace":
                         if (confirm("是否退出？")) window.close();
@@ -139,6 +142,12 @@ class Local {
             dom.nextDiv.style.height = 4 * (config.blockSize + config.divider) + config.divider;
 
             game = new Game();
+            game.onFallEnd = () => {
+                dom.gameDiv.classList.add("FallEnd");
+                setTimeout(() => {
+                    dom.gameDiv.classList.remove("FallEnd");
+                }, 1000 * 0.1);
+            };
             game.init(dom, generateType(), generateDir());
             bindKeyEvent();
             game.preformNext(generateType(), generateDir());

@@ -124,7 +124,7 @@ class Game {
                 refashDiv(gameData, gameDivs);
             }
         };
-        var down = function () {
+        var down = (fall = false) => {
             if (cur.canDown(isValid)) {
                 cleanData();
                 cur.down();
@@ -132,11 +132,14 @@ class Game {
                 refashDiv(gameData, gameDivs);
                 return true;
             } else {
+                if (fall && !checkGameOver()) {
+                    this.onFallEnd && this.onFallEnd();
+                }
                 return false;
             }
         };
         var fall = function () {
-            while (down()) {}
+            while (down(true)) {}
         };
         var left = function () {
             if (cur.canLeft(isValid)) {
@@ -231,7 +234,7 @@ class Game {
             score = score + s;
             scoreDiv.innerHTML = score;
         };
-        var gameOver = function (win) {
+        var gameOver = (win) => {
             if (win) {
                 resultDiv.innerHTML = "you win";
             } else {
@@ -277,5 +280,6 @@ class Game {
         this.addSocre = addSocre;
         this.gameOver = gameOver;
         this.addTailLines = addTailLines;
+        this.onFallEnd = null;
     }
 }
