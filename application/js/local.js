@@ -7,6 +7,7 @@ class RepeatEvent {
     }
 
     run(timeout) {
+        this.stop();
         this.fn();
         this.timer = setTimeout(() => {
             this.run(this.timeout);
