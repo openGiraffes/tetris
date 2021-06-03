@@ -1,55 +1,77 @@
+body {
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
 .square {
-  width: 400px;
-  height: 600px;
-  float: left;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Content{
+    display: flex;
+    flex-direction: row;
+    /* align-items: center; */
 }
 
 .game {
-  width: 200px;
-  height: 400px;
-  background-color: #f2faff;
-  border-left: 1px solid blue;
-  border-right: 1px solid blue;
-  border-bottom: 1px solid blue;
-  position: relative;
-  float: left;
+    position: relative;
+    background-color: #f2faff;
+    border-left: 1px solid blue;
+    border-right: 1px solid blue;
+    border-bottom: 1px solid blue;
+}
+
+.Right{
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .next {
-  width: 80px;
-  height: 80px;
-  background-color: #f2faff;
-  position: relative;
-  border: 1px solid blue;
-  float: left;
-  margin-left: 20px;
+    position: relative;
+    background-color: #f2faff;
+    border: 1px solid blue;
 }
 
 .info {
-  float: left;
-  margin-left: 40px;
-  margin-top: 10px;
+    margin-top: 15px;
+    position: relative;
+    font-size: 12px;
 }
 
 .none,
 .current,
 .done {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  box-sizing: border-box;
+    position: absolute;
+    box-sizing: border-box;
 }
 
 .none {
-  background-color: #f2faff;
+    background-color: transparent;
 }
 
 .current {
-  background-color: pink;
-  border: 1px solid black;
+    background-color: pink;
+    border: 1px solid black;
 }
 
 .done {
-  background-color: grey;
-  border: 1px solid black;
+    background-color: grey;
+    border: 1px solid black;
+}
+
+.current.preview{
+    opacity: 0.2;
 }
