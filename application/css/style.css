@@ -5,6 +5,7 @@ body {
     height: 100vh;
     overflow: hidden;
     position: relative;
+    background-color: rgb(234, 236, 116);
 }
 
 .square {
