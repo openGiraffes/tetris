@@ -73,12 +73,7 @@ class Game {
             }
         };
         var cleanData = function () {
-            previewData.forEach(item => {
-                if (gameData[item.x] && gameData[item.x][item.y] == 3) {
-                    gameData[item.x][item.y] = 0;
-                }
-            });
-            previewData = [];
+            clearPreviewData();
             for (var i = 0; i < cur.data.length; i++) {
                 for (var j = 0; j < cur.data[0].length; j++) {
                     if (check(cur.origin, i, j)) gameData[cur.origin.x + i][cur.origin.y + j] = 0;
@@ -93,6 +88,20 @@ class Game {
                     }
                 }
             }
+            setPerviewData();
+        };
+        const clearPreviewData = () => {
+            previewData.forEach((item) => {
+                if (gameData[item.x][item.y] == 3) {
+                    gameData[item.x][item.y] = 0;
+                }
+            });
+            previewData = [];
+        };
+        const setPerviewData = () => {
+            if (!cur) {
+                return;
+            }
             var test = { x: cur.origin.x, y: cur.origin.y };
             while (isValid(test, cur.data)) {
                 test.x += 1;
@@ -100,9 +109,9 @@ class Game {
             test.x -= 1;
             for (var i = 0; i < cur.data.length; i++) {
                 for (var j = 0; j < cur.data[0].length; j++) {
-                    previewData.push({ x: test.x + i, y: test.y + j });
                     if (check(test, i, j) && gameData[test.x + i][test.y + j] == 0 && cur.data[i][j] == 2) {
                         gameData[test.x + i][test.y + j] = 3;
+                        previewData.push({ x: test.x + i, y: test.y + j });
                     }
                 }
             }
@@ -115,7 +124,7 @@ class Game {
                 refashDiv(gameData, gameDivs);
             }
         };
-        var down = function () {
+        var down = (fall = false) => {
             if (cur.canDown(isValid)) {
                 cleanData();
                 cur.down();
@@ -123,11 +132,14 @@ class Game {
                 refashDiv(gameData, gameDivs);
                 return true;
             } else {
+                if (fall && !checkGameOver()) {
+                    this.onFallEnd && this.onFallEnd();
+                }
                 return false;
             }
         };
         var fall = function () {
-            while (down()) {}
+            while (down(true)) {}
         };
         var left = function () {
             if (cur.canLeft(isValid)) {
@@ -222,7 +234,7 @@ class Game {
             score = score + s;
             scoreDiv.innerHTML = score;
         };
-        var gameOver = function (win) {
+        var gameOver = (win) => {
             if (win) {
                 resultDiv.innerHTML = "you win";
             } else {
@@ -230,6 +242,7 @@ class Game {
             }
         };
         var addTailLines = function (lines) {
+            clearPreviewData();
             for (var i = 0; i < gameData.length - lines.length; i++) {
                 gameData[i] = gameData[i + lines.length];
             }
@@ -267,5 +280,6 @@ class Game {
         this.addSocre = addSocre;
         this.gameOver = gameOver;
         this.addTailLines = addTailLines;
+        this.onFallEnd = null;
     }
 }
