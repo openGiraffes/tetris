@@ -1,3 +1,30 @@
+class RepeatEvent {
+    constructor(fn, timeout = 25, firstTime = 250) {
+        this.timer = null;
+        this.fn = fn;
+        this.timeout = timeout;
+        this.firstTime = firstTime;
+    }
+
+    run(timeout) {
+        this.fn();
+        this.timer = setTimeout(() => {
+            this.run(this.timeout);
+        }, timeout);
+    }
+
+    start() {
+        this.run(this.firstTime);
+    }
+
+    stop() {
+        if (this.timer) {
+            clearTimeout(this.timer);
+            this.timer = null;
+        }
+    }
+}
+
 class Local {
     constructor() {
         var game;
@@ -5,6 +32,12 @@ class Local {
         var timer = null;
         var timeCount = 0;
         var time = 0;
+        let leftEvent = new RepeatEvent(() => {
+            game.left();
+        });
+        let rightEvent = new RepeatEvent(() => {
+            game.right();
+        });
         var bindKeyEvent = function () {
             document.activeElement.addEventListener("keydown", function (e) {
                 if (e.key != "EndCall") e.preventDefault();
@@ -14,25 +47,35 @@ class Local {
                         location.reload();
                         break;
                     case "ArrowUp":
-                        game.rotate();
                         break;
                     case "ArrowDown":
-                        game.down();
-                        break;
-                    case "Enter":
                         game.fall();
                         break;
-                    case "ArrowRight":
-                        game.right();
+                    case "Enter":
+                        game.rotate();
                         break;
                     case "ArrowLeft":
-                        game.left();
+                        !e.repeat && leftEvent.start();
+                        break;
+                    case "ArrowRight":
+                        !e.repeat && rightEvent.start();
                         break;
                     case "Backspace":
                         if (confirm("是否退出？")) window.close();
                         break;
                     case "#":
-                        alert("请用方向键和确认键进行操作，上->旋转 下->坠落 左->左移 右->右移动");
+                        alert("请用方向键和确认键进行操作，确认键->旋转 下->坠落 左->左移 右->右移");
+                        break;
+                }
+            });
+
+            document.activeElement.addEventListener("keyup", function (e) {
+                switch (e.key) {
+                    case "ArrowLeft":
+                        leftEvent.stop();
+                        break;
+                    case "ArrowRight":
+                        rightEvent.stop();
                         break;
                 }
             });
