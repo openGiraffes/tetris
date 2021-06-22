@@ -1,7 +1,7 @@
 {
-  "name": "tetris",
-  "subtitle": "tetris",
-  "description": "tetris for KaiOS",
+  "name": "tetris lite",
+  "subtitle": "tetris lite",
+  "description": "tetris lite for KaiOS",
   "version": "1.0",
   "launch_path": "/index.html",
   "type": "privileged",
