@@ -1,9 +1,10 @@
 {
-  "name": "俄罗斯方块",
-  "description": "俄罗斯方块 KaiOS 版",
+  "name": "tetris",
+  "subtitle": "tetris",
+  "description": "tetris for KaiOS",
   "version": "1.0",
   "launch_path": "/index.html",
-  "type": "web",
+  "type": "privileged",
   "origin": "app://kai.michael.tetris",
   "icons": {
     "120": "/img/icon120x120.png"
@@ -13,11 +14,19 @@
     "url": "https://github.com/michael_eddy"
   },
   "permissions": {
-    "attention": {},
-    "browser": {},
-    "mobilenetwork": {},
-    "systemXHR": {}
+    "mobiledata": {},
+    "wifidata": {},
+    "calllog": {}
   },
+  "fullscreen": true,
   "ime_default_softkey_bar": true,
-  "theme_color": "#00a1d6"
+  "theme_color": "#00a1d6",
+  "default_locale": "zh-CN",
+  "locales": {
+    "zh-CN": {
+      "name": "俄罗斯方块",
+      "subtitle": "俄罗斯方块",
+      "description": "俄罗斯方块 KaiOS 版"
+    }
+  }
 }
